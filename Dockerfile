@@ -4,4 +4,4 @@ ENV N8N_HOST=spirited-hope-production-europe-west4.up.railway.app
 ENV N8N_PROTOCOL=https
 ENV N8N_LISTEN_ADDRESS=0.0.0.0
 
-CMD ["sh", "-c", "n8n start --tunnel --port $PORT"]
+CMD ["node", "packages/cli/bin/n8n", "start"]
