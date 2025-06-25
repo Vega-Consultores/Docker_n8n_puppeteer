@@ -14,7 +14,43 @@ RUN apk add --no-cache \
     ttf-freefont \
     udev \
     ttf-liberation \
-    font-noto-emoji
+    font-noto-emoji \
+    # ---- DEPENDENCIAS ADICIONALES PARA PUPPETEER ----
+    mesa-gl \
+    libstdc++ \
+    libxcomposite \
+    libxcursor \
+    libxdamage \
+    libxext \
+    libxfixes \
+    libxi \
+    libxrandr \
+    libxrender \
+    libxscrnsaver \
+    libxtst \
+    libxkbcommon \
+    pango \
+    cairo \
+    graphite2 \
+    dbus \
+    libgudev \
+    udev-lib \
+    # Asegúrate de tener estas también por si acaso
+    bash \
+    curl \
+    git \
+    nodejs-npm \
+    # Estas son librerías X11, a veces necesarias aunque sea headless
+    libxshmfence \
+    libdrm \
+    libgbm \
+    libva \
+    libvdpau \
+    libglvnd \
+    libglvnd-dev \
+    mesa-egl \
+    mesa-glapi \
+    mesa-gles
 
 # Tell Puppeteer to use installed Chrome instead of downloading it
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
