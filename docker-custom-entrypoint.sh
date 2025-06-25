@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# --- INICIO: Nueva línea CRÍTICA para NODE_PATH ---
+# Exportar la ruta de los módulos personalizados para que Node.js los encuentre.
+# Esto asegura que 'require('puppeteer')' funcione en los nodos de ejecución de código.
+export NODE_PATH=/opt/n8n-custom-nodes/node_modules:$NODE_PATH
+# --- FIN: Nueva línea CRÍTICA para NODE_PATH ---
+
 print_banner() {
     echo "----------------------------------------"
     echo "n8n Puppeteer Node - Environment Details"
@@ -28,7 +34,7 @@ print_banner() {
     echo "----------------------------------------"
 }
 
-# Add custom nodes to the NODE_PATH
+# Add custom nodes to the N8N_CUSTOM_EXTENSIONS path (esto es para n8n, no para 'require')
 if [ -n "$N8N_CUSTOM_EXTENSIONS" ]; then
     export N8N_CUSTOM_EXTENSIONS="/opt/n8n-custom-nodes:${N8N_CUSTOM_EXTENSIONS}"
 else
@@ -38,4 +44,5 @@ fi
 print_banner
 
 # Execute the original n8n entrypoint script
+# Este script de entrada original se encargará de lanzar n8n.
 exec /docker-entrypoint.sh "$@"
