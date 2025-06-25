@@ -4,4 +4,4 @@ RUN which n8n
 
 ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
 
-CMD ["n8n"]
+CMD ["start"]
