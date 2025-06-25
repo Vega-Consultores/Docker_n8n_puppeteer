@@ -1,18 +1,7 @@
 FROM n8nio/n8n:1.99.1
 
-USER root
+RUN which n8n
 
-RUN apk add --no-cache \
-    chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ttf-freefont \
-    && mkdir -p /usr/lib/chromium/ \
-    && ln -sf /usr/bin/chromium-browser /usr/bin/chromium
-
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-EXPOSE 5678
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
 
 CMD ["n8n"]
