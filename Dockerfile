@@ -34,22 +34,16 @@ RUN apk add --no-cache \
     graphite2 \
     dbus \
     libgudev \
-    udev-lib \
     # Asegúrate de tener estas también por si acaso
     bash \
     curl \
     git \
-    nodejs-npm \
     # Estas son librerías X11, a veces necesarias aunque sea headless
     libxshmfence \
     libdrm \
-    libgbm \
     libva \
     libvdpau \
-    libglvnd \
-    libglvnd-dev \
     mesa-egl \
-    mesa-glapi \
     mesa-gles
 
 # Tell Puppeteer to use installed Chrome instead of downloading it
