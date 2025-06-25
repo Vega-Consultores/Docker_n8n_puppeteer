@@ -8,8 +8,7 @@ RUN apk add --no-cache \
   harfbuzz \
   ttf-freefont \
   && mkdir -p /usr/lib/chromium/ \
-  && [ -e /usr/bin/chromium ] || ln -s /usr/bin/chromium-browser /usr/bin/chromium
-
+  && ln -sf /usr/bin/chromium-browser /usr/bin/chromium
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
