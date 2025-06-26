@@ -38,7 +38,6 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Usuario no root
-RUN useradd --create-home --shell /bin/bash node
 USER node
 WORKDIR /home/node
 
