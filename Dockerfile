@@ -41,4 +41,4 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 USER node
 WORKDIR /home/node
 
-CMD ["start"]
+CMD ["n8n"]
