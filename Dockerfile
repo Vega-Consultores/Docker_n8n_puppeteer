@@ -51,7 +51,7 @@ RUN mkdir -p /opt/n8n-custom-nodes && \
 COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
 RUN chmod +x /docker-custom-entrypoint.sh && \
     chown node:node /docker-custom-entrypoint.sh
-
+ENV WEBHOOK_URL=https://<TU-DOMINIO>.up.railway.app/
 USER node
 WORKDIR /home/node
 
