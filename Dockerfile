@@ -56,4 +56,4 @@ USER node
 WORKDIR /home/node
 
 ENTRYPOINT ["/docker-custom-entrypoint.sh"]
-CMD ["n8n"]
+CMD ["start"]
