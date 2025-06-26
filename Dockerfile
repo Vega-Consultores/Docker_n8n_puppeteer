@@ -1,44 +1,59 @@
-FROM node:22-slim
+FROM docker.n8n.io/n8nio/n8n
 
-# Instala dependencias del sistema
-RUN apt-get update && apt-get install -y \
+USER root
+
+# Instalar Chrome y dependencias
+RUN apk add --no-cache \
     chromium \
+    nss \
+    glib \
+    freetype \
+    harfbuzz \
     ca-certificates \
-    fonts-liberation \
-    libasound2 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libdbus-1-3 \
-    libdrm2 \
-    libgbm1 \
-    libgtk-3-0 \
-    libnspr4 \
-    libnss3 \
-    libx11-xcb1 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxrandr2 \
-    xdg-utils \
-    wget \
+    ttf-freefont \
+    udev \
+    ttf-liberation \
+    font-noto-emoji \
+    mesa-egl \
+    mesa-gl \
+    libstdc++ \
+    libxcomposite \
+    libxcursor \
+    libxdamage \
+    libxext \
+    libxfixes \
+    libxi \
+    libxrandr \
+    libxrender \
+    libxscrnsaver \
+    libxtst \
+    libxkbcommon \
+    pango \
+    cairo \
+    graphite2 \
+    dbus \
+    libgudev \
+    bash \
     curl \
-    git \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    git
 
-# Instala n8n
-RUN npm install --global n8n
+# Configurar Puppeteer para usar el Chrome instalado
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-# Instala n8n-nodes-puppeteer
+# Instalar n8n-nodes-puppeteer + puppeteer en /opt/n8n-custom-nodes
 RUN mkdir -p /opt/n8n-custom-nodes && \
     cd /opt/n8n-custom-nodes && \
-    npm install n8n-nodes-puppeteer
+    npm install n8n-nodes-puppeteer puppeteer && \
+    chown -R node:node /opt/n8n-custom-nodes
 
-# Configura Puppeteer para usar Chromium del sistema
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+# Copiar tu entrypoint personalizado
+COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
+RUN chmod +x /docker-custom-entrypoint.sh && \
+    chown node:node /docker-custom-entrypoint.sh
 
-# Usuario no root
 USER node
 WORKDIR /home/node
 
+ENTRYPOINT ["/docker-custom-entrypoint.sh"]
 CMD ["n8n"]
