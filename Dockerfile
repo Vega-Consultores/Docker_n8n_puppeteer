@@ -1,63 +1,45 @@
-FROM docker.n8n.io/n8nio/n8n
+FROM node:22-slim
 
-USER root
-
-# Install Chrome dependencies and Chrome
-RUN apk add --no-cache \
+# Instala dependencias del sistema
+RUN apt-get update && apt-get install -y \
     chromium \
-    nss \
-    glib \
-    freetype \
-    harfbuzz \
     ca-certificates \
-    ttf-freefont \
-    udev \
-    ttf-liberation \
-    font-noto-emoji \
-    mesa-egl \
-    mesa-gl \
-    libstdc++ \
-    libxcomposite \
-    libxcursor \
-    libxdamage \
-    libxext \
-    libxfixes \
-    libxi \
-    libxrandr \
-    libxrender \
-    libxscrnsaver \
-    libxtst \
-    libxkbcommon \
-    pango \
-    cairo \
-    graphite2 \
-    dbus \
-    libgudev \
-    bash \
+    fonts-liberation \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libdbus-1-3 \
+    libdrm2 \
+    libgbm1 \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    xdg-utils \
+    wget \
     curl \
-    git
+    git \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Tell Puppeteer to use installed Chrome instead of downloading it
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# Instala n8n
+RUN npm install --global n8n
 
-# Install n8n-nodes-puppeteer in a permanent location
+# Instala n8n-nodes-puppeteer
 RUN mkdir -p /opt/n8n-custom-nodes && \
     cd /opt/n8n-custom-nodes && \
-    npm install n8n-nodes-puppeteer && \
-    chown -R node:node /opt/n8n-custom-nodes
+    npm install n8n-nodes-puppeteer
 
-# --- NUEVO: Instalar puppeteer en el directorio global de n8n ---
-# Esto puede resolver el "Cannot find module" si n8n no busca en NODE_PATH para ciertos contextos.
-RUN cd /usr/local/lib/node_modules/n8n && npm install puppeteer puppeteer-core && \
-    chown -R node:node /usr/local/lib/node_modules/n8n/node_modules/puppeteer* || true
-# --- FIN NUEVO ---
+# Configura Puppeteer para usar Chromium del sistema
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Copy our custom entrypoint
-COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
-RUN chmod +x /docker-custom-entrypoint.sh && \
-    chown node:node /docker-custom-entrypoint.sh
-
+# Usuario no root
+RUN useradd --create-home --shell /bin/bash node
 USER node
+WORKDIR /home/node
 
-ENTRYPOINT ["/docker-custom-entrypoint.sh"]
+CMD ["start"]
