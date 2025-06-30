@@ -47,6 +47,9 @@ RUN mkdir -p /opt/n8n-custom-nodes && \
     npm install n8n-nodes-puppeteer puppeteer && \
     chown -R node:node /opt/n8n-custom-nodes
 
+# Install puppeteer globally so all require('puppeteer') works in any node context
+RUN npm install -g puppeteer
+
 # Copiar tu entrypoint personalizado
 COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
 RUN chmod +x /docker-custom-entrypoint.sh && \
