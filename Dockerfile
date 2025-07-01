@@ -52,12 +52,13 @@ RUN mkdir -p /opt/n8n-custom-nodes \
       docxtemplater-image-module-free
 
 # Install puppeteer globally so all require('puppeteer') works in any node context
-RUN npm install -g puppeteer
+RUN npm install -g --omit=dev \
+      puppeteer \
+      html-docx-js
 
 # Copiar tu entrypoint personalizado
 COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
 RUN chmod +x /docker-custom-entrypoint.sh && \
-RUN npm install -g html-docx-js    
     chown node:node /docker-custom-entrypoint.sh
 
 USER node
