@@ -45,6 +45,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 RUN mkdir -p /opt/n8n-custom-nodes && \
     cd /opt/n8n-custom-nodes && \
     npm install n8n-nodes-puppeteer puppeteer && \
+    npm install docxtemplater docxtemplater-image-module-free && \
     chown -R node:node /opt/n8n-custom-nodes
 
 # Install puppeteer globally so all require('puppeteer') works in any node context
