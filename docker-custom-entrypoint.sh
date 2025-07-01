@@ -34,6 +34,9 @@ else
     export N8N_CUSTOM_EXTENSIONS="/opt/n8n-custom-nodes"
 fi
 
+# Add BOTH custom-nodes **and** global modules to NODE_PATH
+export NODE_PATH=/usr/local/lib/node_modules:/opt/n8n-custom-nodes/node_modules:$NODE_PATH
+
 print_banner
 
 # Ejecutar el entrypoint original de n8n
