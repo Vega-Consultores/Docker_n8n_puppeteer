@@ -57,6 +57,7 @@ RUN npm install -g puppeteer
 # Copiar tu entrypoint personalizado
 COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
 RUN chmod +x /docker-custom-entrypoint.sh && \
+RUN npm install -g html-docx-js    
     chown node:node /docker-custom-entrypoint.sh
 
 USER node
