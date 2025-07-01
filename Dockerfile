@@ -44,13 +44,14 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 # Install community nodes + their runtime deps **in /opt/n8n-custom-nodes**
 RUN mkdir -p /opt/n8n-custom-nodes \
  && cd /opt/n8n-custom-nodes \
- && npm install --production \
-      n8n-nodes-puppeteer \
-      n8n-nodes-docxtemplater \
-      puppeteer \
-      docxtemplater \
-      docxtemplater-image-module-free \
-      html-docx-js   
+&& npm install --production \
+     n8n-nodes-puppeteer \
+     n8n-nodes-docxtemplater \
+     puppeteer \
+     docxtemplater \
+     docxtemplater-image-module-free \
+     html-docx-js   # <-- force rebuild
+
 
 # Install puppeteer globally so all require('puppeteer') works in any node context
 RUN npm install -g --omit=dev puppeteer
