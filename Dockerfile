@@ -41,7 +41,7 @@ RUN apk add --no-cache \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-# Install community nodes + their runtime deps
+# Install community nodes + their runtime deps **in /opt/n8n-custom-nodes**
 RUN mkdir -p /opt/n8n-custom-nodes \
  && cd /opt/n8n-custom-nodes \
  && npm install --production \
@@ -49,12 +49,11 @@ RUN mkdir -p /opt/n8n-custom-nodes \
       n8n-nodes-docxtemplater \
       puppeteer \
       docxtemplater \
-      docxtemplater-image-module-free
+      docxtemplater-image-module-free \
+      html-docx-js   
 
 # Install puppeteer globally so all require('puppeteer') works in any node context
-RUN npm install -g --omit=dev \
-      puppeteer \
-      html-docx-js
+RUN npm install -g --omit=dev puppeteer
 
 # Copiar tu entrypoint personalizado
 COPY docker-custom-entrypoint.sh /docker-custom-entrypoint.sh
