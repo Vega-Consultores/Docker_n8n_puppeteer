@@ -1,5 +1,7 @@
 FROM docker.n8n.io/n8nio/n8n
 
+ARG CACHE_BREAK=20250701b
+
 USER root
 
 # Instalar Chrome y dependencias
